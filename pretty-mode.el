@@ -2,18 +2,18 @@
 ;;; -*- coding: utf-8 -*-
 
 ;;; Commentary:
-;; 
+;;
 ;; Minor mode for redisplaying parts of the buffer as pretty symbols
 ;; originally modified from Trent Buck's version at http://paste.lisp.org/display/42335,2/raw
 ;; Also includes code from `sml-mode'
 ;; See also http://www.emacswiki.org/cgi-bin/wiki/PrettyLambda
-;; 
+;;
 ;; Released under the GPL. No implied warranties, etc. Use at your own risk.
 ;; Arthur Danskin <arthurdanskin@gmail.com>, March 2008
 ;;
 ;; to install:
 ;; (require 'pretty-mode)
-;; and 
+;; and
 ;; (global-pretty-mode 1)
 ;; or
 ;; (add-hook 'my-pretty-language-hook 'turn-on-pretty-mode)
@@ -130,7 +130,7 @@ expected by `pretty-patterns'"
                       (let* ((mode (intern (concat (symbol-name mode)
                                                    "-mode")))
                              (assoc-pair (assoc mode pretty-patterns))
-                            
+
                              (entry (cons regexp glyph)))
                         (if assoc-pair
                             (push entry (cdr assoc-pair))
@@ -141,7 +141,7 @@ expected by `pretty-patterns'"
 (defvar pretty-patterns
   (let* ((lispy '(scheme emacs-lisp lisp))
          (mley '(tuareg haskell sml))
-         (c-like '(c c++ perl sh python java ess ruby))
+         (c-like '(c c++ perl sh python java ess ruby javascript js2 coffee))
          (all (append lispy mley c-like (list 'octave))))
     (pretty-compile-patterns
      `(
@@ -149,14 +149,15 @@ expected by `pretty-patterns'"
            ("<>" tuareg octave)
            ("~=" octave)
            ("/=" haskell emacs-lisp))
+       (?)
        (?≤ ("<=" ,@all))
        (?≥ (">=" ,@all))
        (?← ("<-" ,@mley ess))
-       (?➛ ("->" ,@mley ess c c++ perl))
+       (?➛ ("->" ,@mley ess c c++ perl coffee))
        (?↑ ("\\^" tuareg))
-       (?⟹ ("=>" sml perl ruby haskell))
+       (?⟹ ("=>" sml perl ruby haskell coffee))
        (?∅ ("nil" emacs-lisp ruby)
-           ("null" scheme java)
+           ("null" scheme java javascript js2 coffee)
            ("NULL" c c++)
 ;;;        ("None" python)
            ("()" ,@mley))
@@ -182,7 +183,8 @@ expected by `pretty-patterns'"
 ;;;        ("case-\\(lambda\\)" scheme)
            ("fn" sml)
            ("fun" tuareg)
-           ("\\" haskell))
+           ("\\" haskell)
+           ("function" javascript js2))
        (?π ("pi" ,@all)
            ("M_PI" c c++))
        (?φ ("psi" ,@all))
@@ -227,7 +229,7 @@ expected by `pretty-patterns'"
 ;;;    (?⋂ "\\<intersection\\>"   (,@lispen))
 ;;;    (?⋃ "\\<union\\>"          (,@lispen))
 
-   
+
 ;;;    (?∧ ("\\<And\\>"     emacs-lisp lisp python)
 ;;;        ("\\<andalso\\>" sml)
 ;;;        ("&&"            c c++ perl haskell))
@@ -261,7 +263,7 @@ relevant buffer(s)."
 
 (defun pretty-regexp (regexp glyph)
   "Replace REGEXP with GLYPH in buffer."
-  (interactive "MRegexp to replace: 
+  (interactive "MRegexp to replace:
 MCharacter to replace with: ")
   (pretty-add-keywords nil `((,regexp . ,(string-to-char glyph))))
   (font-lock-fontify-buffer))
