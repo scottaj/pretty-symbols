@@ -154,7 +154,7 @@ expected by `pretty-patterns'"
        (?← ("<-" ,@mley ess))
        (?➛ ("->" ,@mley ess c c++ perl coffee))
        (?↑ ("\\^" tuareg))
-       (?⟹ ("=>" sml perl ruby haskell coffee))
+       (?⇒ ("=>" sml perl ruby haskell coffee))
        (?∅ ("nil" emacs-lisp ruby)
            ("null" scheme java javascript js2 coffee)
            ("NULL" c c++)
