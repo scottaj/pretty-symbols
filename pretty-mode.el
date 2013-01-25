@@ -149,7 +149,6 @@ expected by `pretty-patterns'"
            ("<>" tuareg octave)
            ("~=" octave)
            ("/=" haskell emacs-lisp))
-       (?)
        (?≤ ("<=" ,@all))
        (?≥ (">=" ,@all))
        (?← ("<-" ,@mley ess))
