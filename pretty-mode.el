@@ -28,7 +28,7 @@
 (defun pretty-font-lock-compose-symbol (alist)
   "Compose a sequence of ascii chars into a symbol."
   (let* ((start (match-beginning 0))
-	 (end (match-end 0))
+         (end (match-end 0))
          (syntax (char-syntax (char-after start))))
     (if (or (if (memq syntax pretty-syntax-types)
                 (or (memq (char-syntax (char-before start)) pretty-syntax-types)
@@ -141,7 +141,7 @@ expected by `pretty-patterns'"
 (defvar pretty-patterns
   (let* ((lispy '(scheme emacs-lisp lisp))
          (mley '(tuareg haskell sml))
-         (c-like '(c c++ perl sh python java ess ruby javascript js2 coffee))
+         (c-like '(c c++ perl sh python java ess ruby enh-ruby javascript js2 coffee))
          (all (append lispy mley c-like (list 'octave))))
     (pretty-compile-patterns
      `(
@@ -154,8 +154,8 @@ expected by `pretty-patterns'"
        (?← ("<-" ,@mley ess))
        (?➛ ("->" ,@mley ess c c++ perl coffee))
        (?↑ ("\\^" tuareg))
-       (?⇒ ("=>" sml perl ruby haskell coffee))
-       (?∅ ("nil" emacs-lisp ruby)
+       (?⇒ ("=>" sml perl ruby enh-ruby haskell coffee))
+       (?∅ ("nil" emacs-lisp ruby enh-ruby)
            ("null" scheme java javascript js2 coffee)
            ("NULL" c c++)
 ;;;        ("None" python)
@@ -212,7 +212,8 @@ expected by `pretty-patterns'"
     ;;     ("(4)" octave)
     ;;     (".(4)" tuareg))
 
-       (?∞ ("HUGE_VAL" c c++))
+       (?∞ ("HUGE_VAL" c c++)
+           ("Infinity" javascript js2 coffee))
 
 ;;;    (?∙ ())
 ;;;    (?× ())
